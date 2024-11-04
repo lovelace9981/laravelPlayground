@@ -36,8 +36,96 @@ try {
 ```
 
 
-- Redis, the Caching key value.
+## Redis, the Caching key value.
 
 > [!NOTE]
 > Redis configuration in this link [redis-config](https://laravel.com/docs/11.x/redis#configuration)
 
+
+### How to check the status of Redis
+
+In the path **routes/web.php**
+
+We can run the Cache::remember() function to get an 1. To get values from the cache.
+
+```php
+Route::get('my-first-route', function()
+{
+    $value = Cache::remember('users', 1000, function () {
+        return 1;
+    });
+    return 'Hello World!'.$value;
+});
+```
+
+
+
+## Livewire
+
+Added support to composer get Livewire blades. To fast deploy webs.
+
+> [!NOTE]
+> Livewire configuration in this link [Livewire](https://livewire.laravel.com/docs/quickstart)
+
+
+To deploy a new Livewire.
+
+```bash
+php artisan make:livewire class name
+```
+
+This makes:
+- app/Livewire/Class.php
+- resources/views/livewire/class.blade.php 
+
+
+### Recommendations
+
+Make in that order
+- Controller
+
+```bash
+php artisan make:controller ClassController
+```
+
+- Make the Components (Views)
+
+```bash
+php artisan make:livewire class name
+```
+
+
+- In the controller put the next :
+
+```php
+use Illuminate\Support\Facades\App;
+
+class MyController extends Controller 
+{
+    public function index()
+    {
+         return App::call(MyLivewireComponent::class);
+         // OR
+        return view('livewire.livewire-component')
+    }
+}
+```
+
+In web.php, this point to index.
+
+```php
+use App\Http\Controllers\MyController;
+ 
+Route::get('/controller', [MyController::class, 'index']);
+```
+
+
+## API
+
+- To make api routes in **routes/api.php**
+
+https://laravel.com/docs/11.x/routing#api-routes
+
+- To get the data paginated with eloquent resources
+
+https://laravel.com/docs/11.x/eloquent-resources#concept-overview
